@@ -7,7 +7,7 @@ import {
   updateClient,
   deleteClient,
 } from "../controllers/client.controller";
-import { validate } from "../middleware/validate";
+import { validate } from "../middlewares/validate";
 import {
   createClientSchema,
   updateClientSchema,

@@ -7,7 +7,7 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user.controller";
-import { validate } from "../middleware/validate";
+import { validate } from "../middlewares/validate";
 import {
   createUserSchema,
   updateUserSchema,
