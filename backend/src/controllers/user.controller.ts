@@ -1,6 +1,6 @@
 // src/controllers/user.controller.ts
 import { Request, Response } from "express";
-import { User } from "../models/user.model";
+import { UserModel as User } from "../models/user.model";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
