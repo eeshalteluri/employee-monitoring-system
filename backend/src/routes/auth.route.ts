@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import User, { Role } from "../models/User";
+import User, { Role } from "../models/user.model";
 
 
 const router = express.Router();
