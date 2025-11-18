@@ -1,7 +1,7 @@
-// src/models/user.model.ts
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
+import type { IUser } from "../types/user";
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, index: true },
@@ -20,5 +20,4 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export const User = model("users", UserSchema);
-export type UserDocument = ReturnType<typeof User["hydrate"]>;
+export const UserModel = model<IUser>("User", UserSchema);
