@@ -1,0 +1,55 @@
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import axios from "axios";
+import { cookies } from "next/headers";
+
+const handler = NextAuth({
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
+
+  callbacks: {
+    async jwt({ token, account, profile }) {
+      console.log("BACKEND URL:", process.env.NEXT_PUBLIC_BACKEND_URL);
+
+      // First time after Google login
+      if (account && profile) {
+        // Role was stored earlier in a cookie when user hit /[role]/auth
+        const cookieStore = await cookies();
+        const roleCookie = cookieStore.get("selected_role")?.value as
+          | "admin"
+          | "manager"
+          | "employee"
+          | undefined;
+
+        const role = roleCookie ?? "employee";
+
+        const backendRes = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`,
+          {
+            email: (profile as any).email,
+            name: (profile as any).name,
+            picture: (profile as any).picture,
+            role,
+          }
+        );
+
+        token.backendJWT = backendRes.data.token;
+        token.role = backendRes.data.user.role; // whatever backend actually stored
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      (session as any).backendJWT = token.backendJWT;
+      (session as any).role = token.role;
+      return session;
+    },
+  },
+});
+
+export { handler as GET, handler as POST };
