@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-import AuthRoutes from "./routes/auth.route"
+import apiRoutes from "./routes"
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ app.get("/api/hello", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.use('/api/auth', AuthRoutes)
+app.use('/api', apiRoutes)
 
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);
