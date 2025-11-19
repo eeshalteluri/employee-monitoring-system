@@ -6,9 +6,11 @@ import projectRoutes from "./project.route";
 import updateRoutes from "./updates.route";
 import fileRoutes from "./file.route";
 import auditRoutes from "./audit.route";
+import authRoutes from "./auth.route";
 
 const router = Router();
 
+router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/clients", clientRoutes);
 router.use("/projects", projectRoutes);
