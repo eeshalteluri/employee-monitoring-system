@@ -11,11 +11,8 @@ const UserSchema = new Schema<IUser>(
       enum: ["admin", "employee", "client", "applicant"],
       required: true,
     },
-    phone: { type: String },
-    image: { type: String },
-    metadata: { type: Object },
-    isActive: { type: Boolean, default: true },
-    assignedClientIds: [{ type: Schema.Types.ObjectId, ref: "clients" }],
+    image: { type: String, required: true },
+    isApproved: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
