@@ -7,11 +7,9 @@ export interface IUser {
   email: string;
   emailVerified: boolean;
   role: UserRole;
-  phone?: string;
-  image?: string;
-  metadata?: Record<string, unknown>;
+  image: string;
   isActive: boolean;
-  assignedClientIds?: Types.ObjectId[];
+  isApproved: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
