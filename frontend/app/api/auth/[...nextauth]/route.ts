@@ -19,23 +19,27 @@ const handler = NextAuth({
       if (account && profile) {
         // Role was stored earlier in a cookie when user hit /[role]/auth
         const cookieStore = await cookies();
-        const roleCookie = cookieStore.get("selected_role")?.value;
+        const roleCookie = cookieStore.get("selected_role")?.value as
+          | "admin"
+          | "manager"
+          | "employee"
+          | undefined;
 
-        const role = roleCookie ?? "employee";
+        const role = roleCookie ?? "employee"
 
         const backendRes = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`,
           {
-            email: profile.email,
-            name: profile.name,
+            email: (profile as any).email,
+            name: (profile as any).name,
             emailVerified: true,
-            image: profile.image,
+            image: (profile as any).picture,
             role,
           }
         );
 
         token.backendJWT = backendRes.data.token;
-        token.role = backendRes.data.user.role;
+        token.role = backendRes.data.user.role; // whatever backend actually stored
       }
 
       return token;
@@ -43,7 +47,7 @@ const handler = NextAuth({
 
     async session({ session, token }) {
       (session as any).backendJWT = token.backendJWT;
-      (session as any).user.role = token.role;
+      (session as any).role = token.role;
       return session;
     },
   },

@@ -1,144 +1,70 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const ProjectSchema = new mongoose.Schema(
+const ProjectSchema = new Schema(
   {
-    // Basic project fields
     title: { type: String, required: true },
 
-    status: {
-      type: String,
-      enum: [
-        "completed",
-        "cancelled",
-        "client",
-        "meeting done",
-        "contact made",
-        "active",
-        "recontacted",
-        "stalled",
-        "requirements sent",
-        "waiting for requirement",
-        "awaiting testimonial",
-        "training"
-      ],
-      default: "active"
-    },
+    slug: { type: String, index: true },
 
     description: { type: String },
 
-    fileLinks: [{ type: String }],
+    clientId: { type: Schema.Types.ObjectId, ref: "clients", required: true },
 
-    clientId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Client"
-    },
+    tags: [String],
 
-    projectType: {
-      type: String,
-      enum: ["client", "research", "management", "training"]
-    },
+    projectType: String,
 
     priority: {
       type: String,
-      enum: ["low", "medium", "high"],
-      default: "medium"
+      enum: ["low", "medium", "high", "critical"],
+      default: "medium",
     },
 
-    estimatedHoursRequired: { type: Number },
-    totalHoursTaken: { type: Number },
+    estimatedHours: Number,
 
-    startDate: { type: Date },
-    endDate: { type: Date },
+    startDate: Date,
+    endDate: Date,
 
-    isAssigned: { type: Boolean, default: false },
-
-    assignees: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Employee"
-      }
-    ],
-
-    leadAssignee: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    status: {
+      type: String,
+      enum: ["planned", "active", "on-hold", "completed", "cancelled"],
+      default: "planned",
     },
 
-    VAIncharge: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    assignments: {
+      leadAssignee: { type: Schema.Types.ObjectId, ref: "users" },
+      virtualAssistant: { type: Schema.Types.ObjectId, ref: "users" },
+      freelancers: [{ type: Schema.Types.ObjectId, ref: "users" }],
+      coders: [{ type: Schema.Types.ObjectId, ref: "users" }],
     },
 
-    freelancers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Freelancer"
-      }
-    ],
-
-    updateIncharge: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    links: {
+      github: String,
+      onedrive: String,
+      loom: String,
+      whatsapp: String,
     },
-
-    codersRecommendation: [
-      {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
-      }
-    ],
-
-    leadership: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
-    },
-
-    githubLinks: [{ type: String }],
-    loomLinks: [{ type: String }],
-
-    clientWhatsappGroupLink: { type: String },
-    teamWhatsappGroupLink: { type: String },
-    slackGroupLink: { type: String },
-
-    clientUpsetOrDidntReply3Days: { type: Boolean, default: false },
-
-    clientHandling: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
-    },
-
-    selectedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
-    },
-
-    askUpdate: { type: String },
-
-    tags: [
-      {
-        type: String,
-        enum: ["stock"]
-      }
-    ],
-
-    remarks: { type: String },
 
     milestones: [
       {
-        title: { type: String, required: true },
-        description: { type: String },
-        dueDate: { type: Date },
-        isCompleted: { type: Boolean, default: false },
-        completedAt: { type: Date },
+        title: String,
+        dueDate: Date,
+        status: String,
+      },
+    ],
 
-        assignedTo: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Employee"
-        }
-      }
-    ]
+    lifecycle: [
+      {
+        state: String,
+        changedAt: Date,
+        by: { type: Schema.Types.ObjectId, ref: "users" },
+      },
+    ],
+
+    meta: { type: Object },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Project", ProjectSchema);
+export const Project = model("projects", ProjectSchema);
+export type ProjectDocument = typeof Project.prototype;
