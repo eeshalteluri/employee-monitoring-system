@@ -1,0 +1,254 @@
+{
+  "info": {
+    "name": "EMS API",
+    "_postman_id": "c9d9f9f0-32df-41c0-8cf8-emsapi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@test.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@test.com\",\n  \"emailVerified\": false,\n  \"role\": \"employee\",\n  \"phone\": \"9876543210\",\n  \"image\": null\n}"
+            },
+            "url": "{{baseUrl}}/users"
+          }
+        },
+        {
+          "name": "Get Users",
+          "request": { "method": "GET", "url": "{{baseUrl}}/users" }
+        },
+        {
+          "name": "Get User By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/users/{{userId}}" }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\"\n}"
+            },
+            "url": "{{baseUrl}}/users/{{userId}}"
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/users/{{userId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Clients",
+      "item": [
+        {
+          "name": "Create Client",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Acme Corp\",\n  \"email\": \"client@acme.com\",\n  \"phone\": \"9988776655\"\n}"
+            },
+            "url": "{{baseUrl}}/clients"
+          }
+        },
+        {
+          "name": "Get Clients",
+          "request": { "method": "GET", "url": "{{baseUrl}}/clients" }
+        },
+        {
+          "name": "Get Client By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/clients/{{clientId}}" }
+        },
+        {
+          "name": "Update Client",
+          "request": {
+            "method": "PUT",
+            "body": { "mode": "raw", "raw": "{ \"name\": \"New Client Name\" }" },
+            "url": "{{baseUrl}}/clients/{{clientId}}"
+          }
+        },
+        {
+          "name": "Delete Client",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/clients/{{clientId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"EMS System\",\n  \"description\": \"Internal Employee Monitoring System\",\n  \"clientId\": \"{{clientId}}\",\n  \"projectType\": \"client\",\n  \"tags\": [\"backend\", \"express\"]\n}"
+            },
+            "url": "{{baseUrl}}/projects"
+          }
+        },
+        {
+          "name": "Get Projects",
+          "request": { "method": "GET", "url": "{{baseUrl}}/projects" }
+        },
+        {
+          "name": "Get Project By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/projects/{{projectId}}" }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"title\": \"Updated Project Name\" }"
+            },
+            "url": "{{baseUrl}}/projects/{{projectId}}"
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/projects/{{projectId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Updates",
+      "item": [
+        {
+          "name": "Create Update",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"{{projectId}}\",\n  \"userId\": \"{{userId}}\",\n  \"message\": \"Completed module 1\",\n  \"status\": \"in_progress\"\n}"
+            },
+            "url": "{{baseUrl}}/updates"
+          }
+        },
+        {
+          "name": "Get Updates",
+          "request": { "method": "GET", "url": "{{baseUrl}}/updates" }
+        },
+        {
+          "name": "Get Update By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/updates/{{updateId}}" }
+        },
+        {
+          "name": "Update Update",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"message\": \"Updated progress\" }"
+            },
+            "url": "{{baseUrl}}/updates/{{updateId}}"
+          }
+        },
+        {
+          "name": "Delete Update",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/updates/{{updateId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Files",
+      "item": [
+        {
+          "name": "Create File",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"{{projectId}}\",\n  \"userId\": \"{{userId}}\",\n  \"fileName\": \"report.pdf\",\n  \"mimeType\": \"application/pdf\",\n  \"s3Key\": \"uploads/report.pdf\"\n}"
+            },
+            "url": "{{baseUrl}}/files"
+          }
+        },
+        {
+          "name": "Get Files",
+          "request": { "method": "GET", "url": "{{baseUrl}}/files" }
+        },
+        {
+          "name": "Get File By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/files/{{fileId}}" }
+        },
+        {
+          "name": "Update File",
+          "request": {
+            "method": "PUT",
+            "body": { "mode": "raw", "raw": "{ \"fileName\": \"new-name.pdf\" }" },
+            "url": "{{baseUrl}}/files/{{fileId}}"
+          }
+        },
+        {
+          "name": "Delete File",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/files/{{fileId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Audits",
+      "item": [
+        {
+          "name": "Create Audit",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"action\": \"update_project\",\n  \"before\": { \"title\": \"Old Project Title\" },\n  \"after\": { \"title\": \"New Project Title\" },\n  \"reason\": \"Project name corrected\"\n}"
+            },
+            "url": "{{baseUrl}}/audits"
+          }
+        },
+        {
+          "name": "Get Audits",
+          "request": { "method": "GET", "url": "{{baseUrl}}/audits" }
+        },
+        {
+          "name": "Get Audit By ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/audits/{{auditId}}" }
+        },
+        {
+          "name": "Update Audit",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"reason\": \"Updated audit description\" }"
+            },
+            "url": "{{baseUrl}}/audits/{{auditId}}"
+          }
+        },
+        {
+          "name": "Delete Audit",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/audits/{{auditId}}" }
+        }
+      ]
+    }
+  ]
+}
