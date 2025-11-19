@@ -25,14 +25,15 @@ const handler = NextAuth({
           | "employee"
           | undefined;
 
-        const role = roleCookie ?? "employee";
+        const role = roleCookie ?? "employee"
 
         const backendRes = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`,
           {
             email: (profile as any).email,
             name: (profile as any).name,
-            picture: (profile as any).picture,
+            emailVerified: true,
+            image: (profile as any).picture,
             role,
           }
         );

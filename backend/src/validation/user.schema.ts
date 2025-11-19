@@ -7,18 +7,14 @@ import { objectIdSchema, paginationQuerySchema } from "./common.schema";
 // --------------------------------------
 const userBaseFields = {
   name: z.string().min(1),
-  email: z.string().email(),
-  emailVerified: z.boolean().default(false),
+  email: z.string(),
+  emailVerified: z.boolean(),
   role: z.enum(["admin", "employee", "client", "applicant"]),
-  phone: z.string().optional(),
-  image: z.string().url().optional(),
-
-  // Zod v4: record(valueType)
-  metadata: z.record(z.string(), z.unknown()).optional(),
-
-  isActive: z.boolean().optional(),
-  assignedClientIds: z.array(objectIdSchema).optional(),
+  image: z.string(),                 // now required
+  isApproved: z.boolean().optional() // default false in DB
 };
+
+
 
 // --------------------------------------
 // CREATE USER
@@ -44,17 +40,13 @@ export const updateUserSchema = z.object({
       email: z.string().email().optional(),
       emailVerified: z.boolean().optional(),
       role: z.enum(["admin", "employee", "client", "applicant"]).optional(),
-      phone: z.string().optional(),
-      image: z.string().url().optional(),
 
-      // Zod v4: record(valueType)
-      metadata: z.record(z.string(), z.unknown()).optional(),
-
-      isActive: z.boolean().optional(),
-      assignedClientIds: z.array(objectIdSchema).optional(),
+      image: z.string().optional(),      // optional for update
+      isApproved: z.boolean().optional() // optional on update
     })
-    .strict(), // disallow extra fields in update
+    .strict(),
 });
+
 
 // --------------------------------------
 // GET USER BY ID
