@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../models/user.model";  // <-- FIXED
+import { User } from "../models/user.model";
 import { UserRole } from "../types/user";
 
 const router = express.Router();
@@ -20,10 +20,10 @@ router.post("/google", async (req, res) => {
     const allowedRoles: UserRole[] = ["admin", "applicant", "employee", "client"];
     const sanitizedRole: UserRole = allowedRoles.includes(role) ? role : "employee";
 
-    let user = await UserModel.findOne({ email });
+    let user = await User.findOne({ email });
 
     if (!user) {
-      user = await UserModel.create({
+      user = await User.create({
         name,
         email,
         image,          // changed from avatar → image (your schema uses image)
