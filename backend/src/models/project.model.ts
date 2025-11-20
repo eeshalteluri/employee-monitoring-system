@@ -25,25 +25,70 @@ const ProjectSchema = new Schema(
     startDate: Date,
     endDate: Date,
 
-    status: {
-      type: String,
-      enum: ["planned", "active", "on-hold", "completed", "cancelled"],
-      default: "planned",
+    isAssigned: { type: Boolean, default: false },
+
+    assignees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
+
+    leadAssignee: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
     },
 
-    assignments: {
-      leadAssignee: { type: Schema.Types.ObjectId, ref: "users" },
-      virtualAssistant: { type: Schema.Types.ObjectId, ref: "users" },
-      freelancers: [{ type: Schema.Types.ObjectId, ref: "users" }],
-      coders: [{ type: Schema.Types.ObjectId, ref: "users" }],
+    VAIncharge: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
     },
 
-    links: {
-      github: String,
-      onedrive: String,
-      loom: String,
-      whatsapp: String,
+    freelancers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Freelancer"
+      }
+    ],
+
+    updateIncharge: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
     },
+
+    codersRecommendation: [
+      {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+      }
+    ],
+
+    leadership: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+
+    githubLinks: [{ type: String }],
+    loomLinks: [{ type: String }],
+
+    clientWhatsappGroupLink: { type: String },
+    teamWhatsappGroupLink: { type: String },
+    slackGroupLink: { type: String },
+
+    clientUpsetOrDidntReply3Days: { type: Boolean, default: false },
+
+    clientHandling: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+
+    selectedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+
+    askUpdate: { type: String },
+    remarks: { type: String },
 
     milestones: [
       {
@@ -53,15 +98,10 @@ const ProjectSchema = new Schema(
       },
     ],
 
-    lifecycle: [
-      {
-        state: String,
-        changedAt: Date,
-        by: { type: Schema.Types.ObjectId, ref: "users" },
-      },
-    ],
-
-    meta: { type: Object },
+        assignedTo: {
+          type: Schema.Types.ObjectId,
+          ref: "User"
+        }
   },
   { timestamps: true }
 );

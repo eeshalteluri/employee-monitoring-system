@@ -17,57 +17,71 @@ export const authOptions: NextAuthOptions = {
      * 1️⃣ SIGNIN CALLBACK — runs ONLY on Google OAuth login
      * ----------------------------------------------------
      */
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       console.log("🔵 [signIn] STARTED");
-      console.log("🔵 [signIn] Received user:", user);
-      console.log("🔵 [signIn] Account:", account);
-      console.log("🔵 [signIn] Profile:", profile);
 
-      if (account?.provider !== "google") {
-        console.log("🔵 [signIn] Not Google provider → rejecting");
-        return false;
-      }
+      if (account?.provider !== "google") return false;
 
-      // Read role from cookie
       const cookieStore = await cookies();
       const selectedRole =
         cookieStore.get("selected_role")?.value || "employee";
 
-      console.log("🟣 [signIn] Selected role from cookie:", selectedRole);
+      console.log("🟣 Selected Role:", selectedRole);
 
       try {
-        console.log("🟣 [signIn] Sending request to backend...");
-
-        const backendRes = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`,
-          {
-            email: user.email,
-            name: user.name,
-            image: user.image,
-            emailVerified: true,
-            role: selectedRole,
-          }
+        // --------------------------------------
+        // 1. Try verifying user
+        // --------------------------------------
+        const verifyRes = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify`,
+          { email: user.email, role: selectedRole },
+          { validateStatus: () => true } // <-- IMPORTANT
         );
 
-        console.log("🟢 [signIn] Backend response:", backendRes.data);
+        console.log("🔵 VERIFY RESULT:", verifyRes.status, verifyRes.data);
 
-        const backendJWT = backendRes.data.token;
-        const backendUser = backendRes.data.user;
+        // --------------------------------------
+        // A. User exists but wrong role → reject
+        // --------------------------------------
+        if (verifyRes.status === 403) {
+          console.log("⛔ ROLE MISMATCH");
+          return false;
+        }
 
-        console.log("🟢 [signIn] Backend JWT:", backendJWT);
-        console.log("🟢 [signIn] Backend User:", backendUser);
+        // --------------------------------------
+        // B. User NOT found → create new user
+        // --------------------------------------
+        if (verifyRes.status === 404) {
+          console.log("🟡 Creating new user...");
 
-        // Attach backend data to user → JWT callback will read this
-        (user as any).backendJWT = backendJWT;
-        (user as any).role = backendUser.role;
+          const createRes = await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`,
+            {
+              email: user.email,
+              name: user.name,
+              image: user.image,
+              role: selectedRole,
+            }
+          );
 
-        console.log("🟢 [signIn] user.backendJWT assigned:", backendJWT);
-        console.log("🟢 [signIn] user.role assigned:", backendUser.role);
+          (user as any).backendJWT = createRes.data.token;
+          (user as any).role = createRes.data.user.role;
 
-        console.log("🟢 [signIn] COMPLETED SUCCESSFULLY");
-        return true;
-      } catch (error: any) {
-        console.error("🔴 [signIn] Backend error:", error?.response?.data || error);
+          return true;
+        }
+
+        // --------------------------------------
+        // C. User exists with correct role
+        // --------------------------------------
+        if (verifyRes.status === 200) {
+          (user as any).backendJWT = verifyRes.data.token;
+          (user as any).role = verifyRes.data.user.role;
+          return true;
+        }
+
+        return false;
+      } catch (err) {
+        console.error("🔴 SIGNIN Fatal Error:", err);
         return false;
       }
     },
@@ -89,9 +103,11 @@ export const authOptions: NextAuthOptions = {
 
         token.backendJWT = (user as any).backendJWT;
         token.role = (user as any).role;
+        token.id = (user as any).id;
 
         console.log("🟡 [jwt] token.backendJWT set:", token.backendJWT);
         console.log("🟡 [jwt] token.role set:", token.role);
+        console.log("🟡 [jwt] token.id set:", token.id);
       }
 
       // Ensure token.role always exists
@@ -118,6 +134,7 @@ export const authOptions: NextAuthOptions = {
       session.backendJWT = token.backendJWT as string | undefined;
       session.user.role = (token.role ??
         "employee") as "admin" | "client" | "employee" | "applicant";
+        session.user.id = token.id as string
 
       console.log("🟢 [session] session.backendJWT set:", session.backendJWT);
       console.log("🟢 [session] session.user.role set:", session.user.role);

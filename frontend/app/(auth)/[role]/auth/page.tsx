@@ -1,29 +1,30 @@
 "use client";
 
 import { useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function RoleAuthPage() {
   const params = useParams<{ role: string }>();
+  const router = useRouter();
+
   const role = params.role;
+  const redirectTo = `/projects`;
 
   useEffect(() => {
-    if (!role) return;
-
-    const start = async () => {
-      // Hit our role initializer: this sets cookie + redirects to Google
+    const run = async () => {
+      
       await fetch("/api/auth/set-role", {
         method: "POST",
         body: JSON.stringify({ role }),
       });
 
       await signIn('google', { 
-        callbackUrl: '/dashboard'
+        callbackUrl: redirectTo
       });
     };
 
-    start();
+    run();
   }, [role]);
 
   return (

@@ -25,5 +25,5 @@ const ClientSchema = new Schema(
   { timestamps: true }
 );
 
-export const Client = model("clients", ClientSchema);
+export const Client = model("Client", ClientSchema);
 export type ClientDocument = typeof Client.prototype;

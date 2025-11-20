@@ -3,16 +3,17 @@ import { objectIdSchema, paginationQuerySchema } from "./common.schema";
 
 export const createClientSchema = z.object({
   body: z.object({
+    _id: z.string(),
     name: z.string().min(1),
     type: z.string().optional(),
     contactName: z.string().optional(),
-    contactEmail: z.string().email().optional(),
+    contactEmail: z.string().optional(),
     contactPhone: z.string().optional(),
     links: z
       .object({
-        github: z.string().url().optional(),
-        onedrive: z.string().url().optional(),
-        loom: z.string().url().optional(),
+        github: z.string().optional(),
+        onedrive: z.string().optional(),
+        loom: z.string().optional(),
         whatsapp: z.string().optional(),
       })
       .partial()

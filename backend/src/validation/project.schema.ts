@@ -3,6 +3,7 @@ import { objectIdSchema, paginationQuerySchema } from "./common.schema";
 
 export const createProjectSchema = z.object({
   body: z.object({
+    _id: z.string(),
     title: z.string(),
     slug: z.string().optional(),
     description: z.string().optional(),
