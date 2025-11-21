@@ -2,6 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
 import { UserRole } from "../types/user";
+import { Client } from "../models/client.model";
 
 const router = express.Router();
 
@@ -72,6 +73,13 @@ router.post("/google", async (req, res) => {
         role: finalRole,
         emailVerified: true,
       });
+    }
+
+    if(user.role === "client") {
+      const client = await Client.create({
+        name: user.name,
+        userId: user._id
+      })
     }
 
     const token = jwt.sign(

@@ -22,6 +22,7 @@
       "@/*": ["./*"]
     }
   },
+  "typeRoots": ["./types", "./node_modules/@types"],
   "include": [
     "frontend/next-env.d.ts",
     "**/*.ts",
@@ -30,6 +31,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "types"
-  ],
+, "../script.ts"  ],
   "exclude": ["node_modules"]
 }

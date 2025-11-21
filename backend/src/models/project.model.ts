@@ -2,17 +2,33 @@ import { Schema, model } from "mongoose";
 
 const ProjectSchema = new Schema(
   {
-    title: { type: String, required: true },
+    clientId: {
+      type: Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+      index: true,
+    },
 
-    slug: { type: String, index: true },
+    title: {
+      type: String,
+      required: true,
+    },
 
-    description: { type: String },
+    description: {
+      type: String,
+      default: "",
+    },
 
-    clientId: { type: Schema.Types.ObjectId, ref: "clients", required: true },
+    tags: {
+      type: [String],
+      default: [],
+    },
 
-    tags: [String],
-
-    projectType: String,
+    projectType: {
+      type: String,
+      enum: ["consulting", "web", "ai", "marketing"],
+      required: true,
+    },
 
     priority: {
       type: String,
@@ -20,91 +36,113 @@ const ProjectSchema = new Schema(
       default: "medium",
     },
 
-    estimatedHours: Number,
+    status: {
+      type: String,
+      enum: ["not_started", "in_progress", "on_hold", "completed", "cancelled"],
+      default: "not_started",
+    },
 
-    startDate: Date,
-    endDate: Date,
+    estimatedHours: {
+      type: Number,
+      default: 0,
+    },
 
-    isAssigned: { type: Boolean, default: false },
+    totalHoursTaken: {
+      type: Number,
+      default: 0,
+    },
 
-    assignees: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User"
-      }
-    ],
+    startDate: {
+      type: Date,
+    },
+
+    endDate: {
+      type: Date,
+    },
+
+    isAssigned: {
+      type: Boolean,
+      default: false,
+    },
+
+    assignees: {
+      type: [String], // Change to ObjectId[] if these reference employees
+      default: [],
+    },
+
+    leadership: {
+      type: [Schema.Types.ObjectId],
+      ref: "Employee",
+      default: [],
+    },
 
     leadAssignee: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "Employee",
     },
 
-    VAIncharge: {
+    VAInCharge: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "Employee",
     },
 
-    freelancers: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Freelancer"
-      }
-    ],
+    freelancers: {
+      type: [Schema.Types.ObjectId],
+      ref: "Employee",
+      default: [],
+    },
 
     updateIncharge: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "Employee",
     },
 
-    codersRecommendation: [
-      {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-      }
-    ],
-
-    leadership: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
+    githubLinks: {
+      type: [String],
+      default: [],
     },
 
-    githubLinks: [{ type: String }],
-    loomLinks: [{ type: String }],
+    loomLinks: {
+      type: [String],
+      default: [],
+    },
 
-    clientWhatsappGroupLink: { type: String },
-    teamWhatsappGroupLink: { type: String },
-    slackGroupLink: { type: String },
+    fileLinks: {
+      type: [String],
+      default: [],
+    },
 
-    clientUpsetOrDidntReply3Days: { type: Boolean, default: false },
+    clientWhatsappGroupLink: {
+      type: String,
+      default: "",
+    },
+
+    teamWhatsappGroupLink: {
+      type: String,
+      default: "",
+    },
+
+    slackGroupLink: {
+      type: String,
+      default: "",
+    },
+
+    clientUpsetOrDidntReply3Days: {
+      type: Boolean,
+      default: false,
+    },
 
     clientHandling: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
+      type: String,
+      default: "",
     },
 
-    selectedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "User"
+    remarks: {
+      type: String,
+      default: "",
     },
-
-    askUpdate: { type: String },
-    remarks: { type: String },
-
-    milestones: [
-      {
-        title: String,
-        dueDate: Date,
-        status: String,
-      },
-    ],
-
-        assignedTo: {
-          type: Schema.Types.ObjectId,
-          ref: "User"
-        }
   },
   { timestamps: true }
 );
 
-export const Project = model("projects", ProjectSchema);
-export type ProjectDocument = typeof Project.prototype;
+export default model("Project", ProjectSchema);

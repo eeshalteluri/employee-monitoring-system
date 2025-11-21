@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const ClientSchema = new Schema(
+const EmployeeSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -9,15 +9,15 @@ const ClientSchema = new Schema(
       index: true,
     },
 
-    phone: {
-      type: String,
-      default: "",
-    },
-
     type: {
       type: String,
-      enum: ["new", "existing"],
-      default: "new",
+      enum: ["coder", "VA", "core", "lead", "freelancer", "intern"],
+      required: true,
+    },
+
+    skills: {
+      type: [String],
+      default: [],
     },
 
     isActive: {
@@ -28,4 +28,4 @@ const ClientSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("Client", ClientSchema);
+export default model("Employee", EmployeeSchema);

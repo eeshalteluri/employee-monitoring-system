@@ -3,6 +3,8 @@ import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 import { cookies } from "next/headers";
 
+const isDebug = true; // toggle logging
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -12,49 +14,36 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    /**
-     * ----------------------------------------------------
-     * 1️⃣ SIGNIN CALLBACK — runs ONLY on Google OAuth login
-     * ----------------------------------------------------
-     */
+    /* ------------------------------------------------------
+     * 1️⃣ SIGN IN — Only runs on Google OAuth login
+     * ------------------------------------------------------ */
     async signIn({ user, account }) {
-      console.log("🔵 [signIn] STARTED");
-
       if (account?.provider !== "google") return false;
 
       const cookieStore = await cookies();
       const selectedRole =
         cookieStore.get("selected_role")?.value || "employee";
 
-      console.log("🟣 Selected Role:", selectedRole);
+      isDebug &&
+        console.log("[signIn] Selected Role:", selectedRole);
 
       try {
-        // --------------------------------------
-        // 1. Try verifying user
-        // --------------------------------------
-        const verifyRes = await axios.post(
+        // ---- Try verifying user first ----
+        const verify = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify`,
           { email: user.email, role: selectedRole },
-          { validateStatus: () => true } // <-- IMPORTANT
+          { validateStatus: () => true }
         );
 
-        console.log("🔵 VERIFY RESULT:", verifyRes.status, verifyRes.data);
+        isDebug &&
+          console.log("[signIn] Verify Result:", verify.status);
 
-        // --------------------------------------
-        // A. User exists but wrong role → reject
-        // --------------------------------------
-        if (verifyRes.status === 403) {
-          console.log("⛔ ROLE MISMATCH");
-          return false;
-        }
+        // 403 — role mismatch
+        if (verify.status === 403) return false;
 
-        // --------------------------------------
-        // B. User NOT found → create new user
-        // --------------------------------------
-        if (verifyRes.status === 404) {
-          console.log("🟡 Creating new user...");
-
-          const createRes = await axios.post(
+        // 404 — user doesn't exist → create
+        if (verify.status === 404) {
+          const created = await axios.post(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`,
             {
               email: user.email,
@@ -64,82 +53,52 @@ export const authOptions: NextAuthOptions = {
             }
           );
 
-          (user as any).backendJWT = createRes.data.token;
-          (user as any).role = createRes.data.user.role;
+          user.backendJWT = created.data.token;
+          user.role = created.data.user.role;
+          user.id = created.data.user.id;
 
           return true;
         }
 
-        // --------------------------------------
-        // C. User exists with correct role
-        // --------------------------------------
-        if (verifyRes.status === 200) {
-          (user as any).backendJWT = verifyRes.data.token;
-          (user as any).role = verifyRes.data.user.role;
+        // 200 — user exists
+        if (verify.status === 200) {
+          user.backendJWT = verify.data.token;
+          user.role = verify.data.user.role;
+          user.id = verify.data.user.id;
+
           return true;
         }
 
         return false;
       } catch (err) {
-        console.error("🔴 SIGNIN Fatal Error:", err);
+        console.error("SIGNIN ERROR:", err);
         return false;
       }
     },
 
-    /**
-     * ----------------------------------------------------
-     * 2️⃣ JWT CALLBACK — runs after signIn() & every request
-     * ----------------------------------------------------
-     */
-    async jwt({ token, user, account }) {
-      console.log("🟡 [jwt] STARTED");
-      console.log("🟡 [jwt] Existing token:", token);
-      console.log("🟡 [jwt] Incoming user:", user);
-      console.log("🟡 [jwt] Account:", account);
-
-      // First login: "user" exists only when signIn() just happened
+    /* ------------------------------------------------------
+     * 2️⃣ JWT CALLBACK — Stores JWT & user info
+     * ------------------------------------------------------ */
+    async jwt({ token, user }) {
       if (user) {
-        console.log("🟡 [jwt] First login detected — copying from user");
-
-        token.backendJWT = (user as any).backendJWT;
-        token.role = (user as any).role;
-        token.id = (user as any).id;
-
-        console.log("🟡 [jwt] token.backendJWT set:", token.backendJWT);
-        console.log("🟡 [jwt] token.role set:", token.role);
-        console.log("🟡 [jwt] token.id set:", token.id);
+        token.backendJWT = user.backendJWT;
+        token.role = user.role;
+        token.id = user.id;
       }
 
-      // Ensure token.role always exists
-      if (!token.role) {
-        console.log("🟠 [jwt] token.role missing — applying fallback");
-        token.role = "employee";
-      }
+      if (!token.role) token.role = "employee";
 
-      console.log("🟢 [jwt] FINAL token:", token);
-      console.log("🟢 [jwt] COMPLETED");
       return token;
     },
 
-    /**
-     * ----------------------------------------------------
-     * 3️⃣ SESSION CALLBACK — session exposed to frontend
-     * ----------------------------------------------------
-     */
+    /* ------------------------------------------------------
+     * 3️⃣ SESSION CALLBACK — Exposes token to FE
+     * ------------------------------------------------------ */
     async session({ session, token }) {
-      console.log("🔶 [session] STARTED");
-      console.log("🔶 [session] Incoming session:", session);
-      console.log("🔶 [session] Incoming token:", token);
+      session.backendJWT = token.backendJWT;
+      session.user.role = token.role;
+      session.user.id = token.id;
 
-      session.backendJWT = token.backendJWT as string | undefined;
-      session.user.role = (token.role ??
-        "employee") as "admin" | "client" | "employee" | "applicant";
-        session.user.id = token.id as string
-
-      console.log("🟢 [session] session.backendJWT set:", session.backendJWT);
-      console.log("🟢 [session] session.user.role set:", session.user.role);
-
-      console.log("🟢 [session] COMPLETED");
       return session;
     },
   },

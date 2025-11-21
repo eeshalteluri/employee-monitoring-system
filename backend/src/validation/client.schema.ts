@@ -20,7 +20,6 @@ export const createClientSchema = z.object({
       .optional(),
     tags: z.array(z.string()).optional(),
     notes: z.string().optional(),
-    createdBy: objectIdSchema.optional(),
   }),
 });
 
@@ -46,7 +45,6 @@ export const updateClientSchema = z.object({
         .optional(),
       tags: z.array(z.string()).optional(),
       notes: z.string().optional(),
-      createdBy: objectIdSchema.optional(),
     })
     .strict(),
 });

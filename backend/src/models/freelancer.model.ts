@@ -2,14 +2,23 @@ import mongoose, { model, Schema } from "mongoose";
 
 const FreelancerSchema = new Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    emailVerified: { type: Boolean, default: false },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
+
+    employeeId: {
+      type: Schema.Types.ObjectId,
+      ref: "Employee",
+      required: true,
+      index: true,
+    },
 
     country: { type: String },
     timezone: { type: String },
 
-    skills: [{ type: String }],
     hourlyRate: { type: Number },
     availabilityHoursPerWeek: { type: Number },
 
