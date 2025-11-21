@@ -2,28 +2,30 @@ import { Schema, model } from "mongoose";
 
 const ClientSchema = new Schema(
   {
-    name: { type: String, required: true },
-    type: { type: String },
-
-    contactName: { type: String },
-    contactEmail: { type: String },
-    contactPhone: { type: String },
-
-    links: {
-      github: String,
-      onedrive: String,
-      loom: String,
-      whatsapp: String,
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
     },
 
-    tags: [String],
+    phone: {
+      type: String,
+      default: "",
+    },
 
-    notes: String,
+    type: {
+      type: String,
+      enum: ["new", "existing"],
+      default: "new",
+    },
 
-    createdBy: { type: Schema.Types.ObjectId, ref: "users" },
+    isActive: {
+      type: Boolean,
+      ddefault: true,
+    }
   },
   { timestamps: true }
 );
 
-export const Client = model("clients", ClientSchema);
-export type ClientDocument = typeof Client.prototype;
+export default model("Client", ClientSchema);

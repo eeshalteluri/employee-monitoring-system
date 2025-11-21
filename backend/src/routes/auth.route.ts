@@ -1,56 +1,97 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../models/user.model";  // <-- FIXED
+import { User } from "../models/user.model";
 import { UserRole } from "../types/user";
+import { Client } from "../models/client.model";
 
 const router = express.Router();
 
-router.post("/google", async (req, res) => {
+/**
+ * ------------------------------------------
+ * VERIFY USER
+ * ------------------------------------------
+ */
+router.post("/verify", async (req, res) => {
   try {
-    const { email, name, image, role } = req.body as {
-      email: string;
-      name: string;
-      image: string;
-      role: UserRole;
-    };
+    const { email, role } = req.body;
 
-    if (!email || !name || !image || !role)
-      console.error("Invalid data is received to the backend");
+    if (!email) return res.status(400).json({ error: "Email required" });
 
-    const allowedRoles: UserRole[] = ["admin", "applicant", "employee", "client"];
-    const sanitizedRole: UserRole = allowedRoles.includes(role) ? role : "employee";
+    const user = await User.findOne({ email });
 
-    let user = await UserModel.findOne({ email });
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (!user) {
-      user = await UserModel.create({
-        name,
-        email,
-        image,          // changed from avatar → image (your schema uses image)
-        role: sanitizedRole,
-        emailVerified: true,
-      });
-    }
+    if (role && user.role !== role)
+      return res.status(403).json({ error: "ROLE_MISMATCH" });
 
     const token = jwt.sign(
-      { id: user._id.toString(), email: user.email, role: user.role },
+      { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET!,
       { expiresIn: "7d" }
     );
 
-    res.json({
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        image: user.image,
-        role: user.role,
-      },
+    return res.status(200).json({
+      user,
       token,
     });
-  } catch (err) {
-    console.error("Auth /google error", err);
-    res.status(500).json({ error: "Failed to authenticate user" });
+  } catch (error) {
+    console.error("Verify error:", error);
+    return res.status(500).json({ error: "Server error" });
+  }
+});
+
+/**
+ * ------------------------------------------
+ * CREATE GOOGLE USER
+ * ------------------------------------------
+ */
+router.post("/google", async (req, res) => {
+  try {
+    const { email, name, image, role } = req.body;
+
+    if (!email || !name || !image || !role)
+      return res.status(400).json({ error: "Invalid Google data" });
+
+    const allowedRoles: UserRole[] = [
+      "admin",
+      "employee",
+      "client",
+      "applicant",
+    ];
+
+    const finalRole: UserRole = allowedRoles.includes(role)
+      ? role
+      : "employee";
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        image,
+        role: finalRole,
+        emailVerified: true,
+      });
+    }
+
+    if(user.role === "client") {
+      const client = await Client.create({
+        name: user.name,
+        userId: user._id
+      })
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" }
+    );
+
+    return res.json({ user, token });
+  } catch (error) {
+    console.error("Google auth error:", error);
+    return res.status(500).json({ error: "Server error" });
   }
 });
 

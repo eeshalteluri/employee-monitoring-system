@@ -1,16 +1,19 @@
-"use client";
+'use client'
 
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type RoleButtonProps = {
   role: "admin" | "employee" | "client" | "applicant";
   label: string;
 };
+        
 
 export default function RoleButton({ role, label }: RoleButtonProps) {
+  const router = useRouter();
+    
   return (
     <button
-      onClick={() => signIn("google", { callbackUrl: "/", role })}
+      onClick={() => router.push(`/${role}/auth`)}
       className="px-4 py-2 bg-blue-500 text-white rounded"
     >
       {label}

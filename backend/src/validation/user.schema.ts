@@ -6,6 +6,7 @@ import { objectIdSchema, paginationQuerySchema } from "./common.schema";
 // Base User Fields Schema
 // --------------------------------------
 const userBaseFields = {
+  _id: z.string(),
   name: z.string().min(1),
   email: z.string(),
   emailVerified: z.boolean(),

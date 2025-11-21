@@ -249,6 +249,48 @@
           "request": { "method": "DELETE", "url": "{{baseUrl}}/audits/{{auditId}}" }
         }
       ]
+    },
+    {
+  "name": "Freelancers",
+  "item": [
+    {
+      "name": "Create Freelancer",
+      "request": {
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Developer\",\n  \"email\": \"jane@freelance.com\",\n  \"emailVerified\": false,\n  \"country\": \"India\",\n  \"timezone\": \"Asia/Kolkata\",\n  \"skills\": [\"react\", \"node\", \"mongodb\"],\n  \"hourlyRate\": 30,\n  \"availabilityHoursPerWeek\": 20,\n  \"portfolioLink\": \"https://janedev.dev\",\n  \"freelanceProfile\": \"https://upwork.com/jane-dev\",\n  \"experienceLevel\": \"expert\",\n  \"isActive\": true,\n  \"assignedProjects\": [\"{{projectId}}\"],\n  \"rating\": 5,\n  \"paymentMethod\": \"paypal\",\n  \"paymentEmail\": \"pay.jane@paypal.com\",\n  \"currency\": \"USD\"\n}"
+        },
+        "url": "{{baseUrl}}/freelancers"
+      }
+    },
+    {
+      "name": "Get Freelancers",
+      "request": { "method": "GET", "url": "{{baseUrl}}/freelancers" }
+    },
+    {
+      "name": "Get Freelancer By ID",
+      "request": { "method": "GET", "url": "{{baseUrl}}/freelancers/{{freelancerId}}" }
+    },
+    {
+      "name": "Update Freelancer",
+      "request": {
+        "method": "PUT",
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"Updated Freelancer Name\" }"
+        },
+        "url": "{{baseUrl}}/freelancers/{{freelancerId}}"
+      }
+    },
+    {
+      "name": "Delete Freelancer",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/freelancers/{{freelancerId}}"
+      }
     }
+  ]
+}
   ]
 }

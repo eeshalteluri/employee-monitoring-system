@@ -1,144 +1,148 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const ProjectSchema = new mongoose.Schema(
+const ProjectSchema = new Schema(
   {
-    // Basic project fields
-    title: { type: String, required: true },
-
-    status: {
-      type: String,
-      enum: [
-        "completed",
-        "cancelled",
-        "client",
-        "meeting done",
-        "contact made",
-        "active",
-        "recontacted",
-        "stalled",
-        "requirements sent",
-        "waiting for requirement",
-        "awaiting testimonial",
-        "training"
-      ],
-      default: "active"
+    clientId: {
+      type: Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+      index: true,
     },
 
-    description: { type: String },
+    title: {
+      type: String,
+      required: true,
+    },
 
-    fileLinks: [{ type: String }],
+    description: {
+      type: String,
+      default: "",
+    },
 
-    clientId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Client"
+    tags: {
+      type: [String],
+      default: [],
     },
 
     projectType: {
       type: String,
-      enum: ["client", "research", "management", "training"]
+      enum: ["consulting", "web", "ai", "marketing"],
+      required: true,
     },
 
     priority: {
       type: String,
-      enum: ["low", "medium", "high"],
-      default: "medium"
+      enum: ["low", "medium", "high", "critical"],
+      default: "medium",
     },
 
-    estimatedHoursRequired: { type: Number },
-    totalHoursTaken: { type: Number },
-
-    startDate: { type: Date },
-    endDate: { type: Date },
-
-    isAssigned: { type: Boolean, default: false },
-
-    assignees: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Employee"
-      }
-    ],
-
-    leadAssignee: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    status: {
+      type: String,
+      enum: ["not_started", "in_progress", "on_hold", "completed", "cancelled"],
+      default: "not_started",
     },
 
-    VAIncharge: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    estimatedHours: {
+      type: Number,
+      default: 0,
     },
 
-    freelancers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Freelancer"
-      }
-    ],
-
-    updateIncharge: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    totalHoursTaken: {
+      type: Number,
+      default: 0,
     },
 
-    codersRecommendation: [
-      {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
-      }
-    ],
+    startDate: {
+      type: Date,
+    },
+
+    endDate: {
+      type: Date,
+    },
+
+    isAssigned: {
+      type: Boolean,
+      default: false,
+    },
+
+    assignees: {
+      type: [String], // Change to ObjectId[] if these reference employees
+      default: [],
+    },
 
     leadership: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+      type: [Schema.Types.ObjectId],
+      ref: "Employee",
+      default: [],
     },
 
-    githubLinks: [{ type: String }],
-    loomLinks: [{ type: String }],
+    leadAssignee: {
+      type: Schema.Types.ObjectId,
+      ref: "Employee",
+    },
 
-    clientWhatsappGroupLink: { type: String },
-    teamWhatsappGroupLink: { type: String },
-    slackGroupLink: { type: String },
+    VAInCharge: {
+      type: Schema.Types.ObjectId,
+      ref: "Employee",
+    },
 
-    clientUpsetOrDidntReply3Days: { type: Boolean, default: false },
+    freelancers: {
+      type: [Schema.Types.ObjectId],
+      ref: "Employee",
+      default: [],
+    },
+
+    updateIncharge: {
+      type: Schema.Types.ObjectId,
+      ref: "Employee",
+    },
+
+    githubLinks: {
+      type: [String],
+      default: [],
+    },
+
+    loomLinks: {
+      type: [String],
+      default: [],
+    },
+
+    fileLinks: {
+      type: [String],
+      default: [],
+    },
+
+    clientWhatsappGroupLink: {
+      type: String,
+      default: "",
+    },
+
+    teamWhatsappGroupLink: {
+      type: String,
+      default: "",
+    },
+
+    slackGroupLink: {
+      type: String,
+      default: "",
+    },
+
+    clientUpsetOrDidntReply3Days: {
+      type: Boolean,
+      default: false,
+    },
 
     clientHandling: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+      type: String,
+      default: "",
     },
 
-    selectedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Employee"
+    remarks: {
+      type: String,
+      default: "",
     },
-
-    askUpdate: { type: String },
-
-    tags: [
-      {
-        type: String,
-        enum: ["stock"]
-      }
-    ],
-
-    remarks: { type: String },
-
-    milestones: [
-      {
-        title: { type: String, required: true },
-        description: { type: String },
-        dueDate: { type: Date },
-        isCompleted: { type: Boolean, default: false },
-        completedAt: { type: Date },
-
-        assignedTo: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Employee"
-        }
-      }
-    ]
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Project", ProjectSchema);
+export default model("Project", ProjectSchema);

@@ -15,8 +15,11 @@ import {
   listProjectsSchema,
   deleteProjectSchema,
 } from "../validation/project.schema";
+import { auth } from "../middlewares/auth";
 
 const router = Router();
+
+router.use(auth);
 
 router.post("/", validate(createProjectSchema), createProject);
 router.get("/", validate(listProjectsSchema), getProjects);
