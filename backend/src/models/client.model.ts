@@ -22,7 +22,7 @@ const ClientSchema = new Schema(
 
     isActive: {
       type: Boolean,
-      ddefault: true,
+      default: true,
     }
   },
   { timestamps: true }
