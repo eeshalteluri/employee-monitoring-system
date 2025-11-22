@@ -1,130 +1,87 @@
+// src/controllers/project.controller.ts
 import { Request, Response } from "express";
 import { Project } from "../models/project.model";
 
 export const createProject = async (req: Request, res: Response) => {
   try {
-    const { body } = (req as any).validated;
-
-    const project = await Project.create(body);
-    return res.status(201).json(project);
-  } catch (err) {
-    console.error("createProject error:", err);
-    return res.status(500).json({ message: "Internal server error" });
+    const project = await Project.create(req.body);
+    return res.status(201).json({ success: true, data: project });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
 
 export const getProjects = async (req: Request, res: Response) => {
   try {
-    const user = req.user as any;
-    const role = user.role;
-    const userId = user.id;
+    const { page = 1, limit = 10 } = req.query as any;
 
-    const { query } = (req as any).validated || {};
-    const page = query?.page || 1;
-    const limit = query?.limit || 20;
-    const skip = (page - 1) * limit;
+    const projects = await Project.find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate("clientId")
+      .populate("leadAssignee")
+      .populate("VAInCharge")
+      .populate("freelancers")
+      .populate("leadership")
+      .populate("updateIncharge");
 
-    // ------- ROLE BASED QUERY -------
-    let filter: any = {};
+    const total = await Project.countDocuments();
 
-    if (role === "admin") {
-      filter = {}; // admin sees all
-    }
-
-    else if (role === "employee") {
-      filter = {
-        $or: [
-          { assignees: userId },
-          { leadAssignee: userId },
-          { VAIncharge: userId },
-          { updateIncharge: userId },
-          { leadership: userId },
-          { codersRecommendation: userId }
-        ]
-      };
-    }
-
-    else if (role === "client") {
-      filter = { clientId: userId };
-    }
-
-    else {
-      return res.status(403).json({ message: "Unauthorized role" });
-    }
-
-    console.log("User Role: ", role);
-    console.log("Filter data: ", filter);
-
-    // ------- DB QUERY -------
-    const [items, total] = await Promise.all([
-      Project.find(filter)
-        .skip(skip)
-        .limit(limit)
-        .populate("assignees", "name email")
-        .populate("leadAssignee", "name email")
-        .populate("clientId", "name email companyName"),
-      Project.countDocuments(filter),
-    ]);
-
-    console.log("Projects: ", items);
-    
-    return res.json({
-      items,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+    return res.status(200).json({
+      success: true,
+      data: projects,
+      pagination: { page, limit, total },
     });
-  } catch (err) {
-    console.error("getProjects error:", err);
-    return res.status(500).json({ message: "Internal server error" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
 
-
 export const getProjectById = async (req: Request, res: Response) => {
   try {
-    const { params } = (req as any).validated;
+    const project = await Project.findById(req.params.id)
+      .populate("clientId")
+      .populate("leadAssignee")
+      .populate("VAInCharge")
+      .populate("freelancers")
+      .populate("leadership")
+      .populate("updateIncharge");
 
-    console.log("Params: ", params);
-
-    const project = await Project.findById(params.id);
     if (!project) return res.status(404).json({ message: "Project not found" });
 
-    return res.status(200).json(project);
-  } catch (err) {
-    console.error("getProjectById error:", err);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(200).json({ success: true, data: project });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
 
 export const updateProject = async (req: Request, res: Response) => {
   try {
-    const { params, body } = (req as any).validated;
-
-    const project = await Project.findByIdAndUpdate(params.id, body, {
+    const project = await Project.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true,
-    });
+    })
+      .populate("clientId")
+      .populate("leadAssignee")
+      .populate("VAInCharge")
+      .populate("freelancers")
+      .populate("leadership")
+      .populate("updateIncharge");
 
     if (!project) return res.status(404).json({ message: "Project not found" });
-    return res.json(project);
-  } catch (err) {
-    console.error("updateProject error:", err);
-    return res.status(500).json({ message: "Internal server error" });
+
+    return res.status(200).json({ success: true, data: project });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
 
 export const deleteProject = async (req: Request, res: Response) => {
   try {
-    const { params } = (req as any).validated;
+    const project = await Project.findByIdAndDelete(req.params.id);
+    if (!project) return res.status(404).json({ message: "Project not found" });
 
-    const deleted = await Project.findByIdAndDelete(params.id);
-    if (!deleted) return res.status(404).json({ message: "Project not found" });
-
-    return res.status(204).send();
-  } catch (err) {
-    console.error("deleteProject error:", err);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(200).json({ success: true, message: "Project deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
