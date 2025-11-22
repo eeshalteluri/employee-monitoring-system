@@ -1,0 +1,7 @@
+{
+  "name": "EMS Local",
+  "values": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api", "enabled": true },
+    { "key": "token", "value": "", "enabled": true }
+  ]
+}
