@@ -25,4 +25,5 @@ const ProjectAssignmentSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("ProjectAssignment", ProjectAssignmentSchema);
+export const ProjectAssignment = model("ProjectAssignment", ProjectAssignmentSchema);
+export type ProjectAssignmentDocument = typeof ProjectAssignment.prototype;

@@ -26,4 +26,5 @@ const TrainingAssignmentSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("TrainingAssignment", TrainingAssignmentSchema);
+export const TrainingAssignment = model("TrainingAssignment", TrainingAssignmentSchema);
+export const TrainingAssignmentDocument = typeof TrainingAssignment.prototype;

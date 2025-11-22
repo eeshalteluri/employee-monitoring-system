@@ -28,4 +28,5 @@ const ProjectMilestoneSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("ProjectMilestone", ProjectMilestoneSchema);
+export const ProjectMilestone = model("ProjectMilestone", ProjectMilestoneSchema);
+export const ProjectMilestoneDocument = typeof ProjectMilestone.prototype;

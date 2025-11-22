@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from "mongoose";
 
-const TrainingTaskUpdateSchema = new mongoose.Schema({
+const TrainingTaskUpdateSchema = new Schema({
   id: { 
     type: String, 
     required: true, 
@@ -45,4 +45,5 @@ const TrainingTaskUpdateSchema = new mongoose.Schema({
   attachments: { type: [String], default: [] }
 }, { timestamps: true });
 
-module.exports = mongoose.model('TrainingTaskUpdate', TrainingTaskUpdateSchema);
+export const TrainingTaskUpdate = model('TrainingTaskUpdate', TrainingTaskUpdateSchema);
+export const TrainingTaskUpdateDocument = typeof TrainingTaskUpdate.prototype;

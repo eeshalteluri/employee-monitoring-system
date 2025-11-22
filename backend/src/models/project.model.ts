@@ -145,4 +145,5 @@ const ProjectSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("Project", ProjectSchema);
+export const Project = model("Project", ProjectSchema);
+export type ProjectDocument = typeof Project.prototype;

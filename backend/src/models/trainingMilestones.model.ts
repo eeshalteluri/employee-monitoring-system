@@ -27,4 +27,5 @@ const TrainingMilestoneSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("TrainingMilestone", TrainingMilestoneSchema);
+export const TrainingMilestone = model("TrainingMilestone", TrainingMilestoneSchema);
+export const TrainingMilestoneDocument = typeof TrainingMilestone.prototype;

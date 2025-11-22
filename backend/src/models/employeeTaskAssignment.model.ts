@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { model, Schema } from "mongoose";
 
-const EmployeeTaskAssignmentSchema = new mongoose.Schema({
+const EmployeeTaskAssignmentSchema = new Schema({
   id: { 
     type: String, required: true, unique: true 
   },
@@ -19,4 +19,6 @@ const EmployeeTaskAssignmentSchema = new mongoose.Schema({
   endDate: { type: Date },
   score: { type: Number } // optional
 }, { timestamps: true });
-module.exports = mongoose.model('EmployeeTaskAssignment', EmployeeTaskAssignmentSchema);
+
+export const EmployeeTaskAssignment =  model('EmployeeTaskAssignment', EmployeeTaskAssignmentSchema);
+export const EmployeeTaskAssignmentDocument = typeof EmployeeTaskAssignment.prototype;

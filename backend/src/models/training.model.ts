@@ -44,4 +44,5 @@ const TrainingModuleSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("TrainingModule", TrainingModuleSchema);
+export const Training = model("Training", TrainingModuleSchema);
+export const TrainingDocument = typeof Training.prototype;

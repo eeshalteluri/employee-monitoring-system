@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { model, Schema } from "mongoose";
 
-const EmployeeTaskUpdateSchema = new mongoose.Schema({
+const EmployeeTaskUpdateSchema = new Schema({
   id: { 
     type: String, 
     required: true, 
@@ -40,4 +40,5 @@ const EmployeeTaskUpdateSchema = new mongoose.Schema({
   attachments: { type: [String], default: [] }
 }, { timestamps: true });
 
-module.exports = mongoose.model('EmployeeTaskUpdate', EmployeeTaskUpdateSchema);
+export const EmployeeTaskUpdate = model('EmployeeTaskUpdate', EmployeeTaskUpdateSchema);
+export const EmployeeTaskUpdateDocument = typeof EmployeeTaskUpdate.prototype;

@@ -28,4 +28,5 @@ const EmployeeSchema = new Schema(
   { timestamps: true }
 );
 
-export default model("Employee", EmployeeSchema);
+export const Employee = model("Employee", EmployeeSchema);
+export type EmployeeDocument = typeof Employee.prototype;
