@@ -5,42 +5,20 @@ import { redirect } from "next/navigation";
 
 export default async function ProjectsPage() {
   const session = await getServerSession(authOptions);
-  console.log("BACKEND JWT from session =", session?.backendJWT);
 
-  if (!session || !session.user) {
-    redirect("/");
-  }
+  if (!session || !session.user) redirect("/");
 
-  const role = session ? session.user.role : null;
-
-  if (!role) {
-    return <div>You do not have permission to view projects.</div>;
-  }
-
-  // ---- Fetch projects from backend ----
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/projects`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${session?.backendJWT}`, // <-- REQUIRED
-      },
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) {
-    return <div>Error fetching projects</div>;
-  }
-
-  const data = await res.json();
-  const projects = data.items; // because backend returns: { items, total, page, ... }
-  console.log("Projects: ", projects);
+  const role = session.user.role;
 
   return (
-    <div className="w-full p-6">
-      <h1 className="text-2xl font-semibold mb-4">Projects</h1>
-      <ProjectTable projects={projects} role={role} />
+    <div className="w-full p-6 space-y-4">
+      <h1 className="text-2xl font-semibold">Projects</h1>
+      <p className="text-muted-foreground text-sm">
+        Manage all project operations, tracking, assignments and client workflows.
+      </p>
+
+      {/* New table — it fetches from backend itself */}
+      <ProjectTable role={role} />
     </div>
   );
 }
