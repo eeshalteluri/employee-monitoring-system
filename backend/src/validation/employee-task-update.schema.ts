@@ -4,7 +4,6 @@ import { objectIdSchema, paginationQuerySchema } from "./common.schema";
 
 export const createEmployeeTaskUpdateSchema = z.object({
   body: z.object({
-    id: z.string().min(1), // required, unique
     employeeTaskAssignmentId: z.string().min(1),
     employeeId: z.string().min(1),
     employeeTaskId: z.string().min(1),

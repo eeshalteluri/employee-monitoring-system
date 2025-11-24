@@ -1,0 +1,2284 @@
+{
+  "info": {
+    "name": "EMS API",
+    "_postman_id": "ems-api-collection-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Clients",
+      "item": [
+        {
+          "name": "Create Client",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clients",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clients"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{someUserObjectId}}\",\n  \"phone\": \"+1-555-123456\",\n  \"type\": \"new\",\n  \"isActive\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "List Clients",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clients",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clients"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Client by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clients/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clients",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Client",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clients/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clients",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+1-555-987654\",\n  \"type\": \"existing\",\n  \"isActive\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Client",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clients/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clients",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{someUserObjectId}}\",\n  \"type\": \"coder\",\n  \"skills\": [\n    \"React\",\n    \"Node\"\n  ],\n  \"isActive\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "List Employees",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Employee by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"lead\",\n  \"skills\": [\n    \"React\",\n    \"Node\",\n    \"Leadership\"\n  ],\n  \"isActive\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Freelancers",
+      "item": [
+        {
+          "name": "Create Freelancer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/freelancers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "freelancers"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{someUserObjectId}}\",\n  \"employeeId\": \"{{someEmployeeObjectId}}\",\n  \"country\": \"India\",\n  \"timezone\": \"Asia/Kolkata\",\n  \"hourlyRate\": 25,\n  \"availabilityHoursPerWeek\": 20,\n  \"portfolioLink\": \"https://portfolio.example.com\",\n  \"freelanceProfile\": \"https://upwork.com/profile/123\",\n  \"experienceLevel\": \"intermediate\",\n  \"isActive\": true,\n  \"assignedProjects\": [\n    \"{{someProjectObjectId}}\"\n  ],\n  \"rating\": 4.5,\n  \"paymentMethod\": \"PayPal\",\n  \"paymentEmail\": \"freelancer@example.com\",\n  \"currency\": \"USD\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Freelancers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/freelancers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "freelancers"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Freelancer by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/freelancers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "freelancers",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Freelancer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/freelancers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "freelancers",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hourlyRate\": 30,\n  \"availabilityHoursPerWeek\": 25,\n  \"isActive\": true,\n  \"rating\": 4.8\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Freelancer",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/freelancers/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "freelancers",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "projects"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientId\": \"{{someClientObjectId}}\",\n  \"title\": \"Website Redesign\",\n  \"description\": \"Full redesign for ACME Corp website.\",\n  \"tags\": [\n    \"web\",\n    \"redesign\",\n    \"priority\"\n  ],\n  \"projectType\": \"web\",\n  \"priority\": \"high\",\n  \"status\": \"in_progress\",\n  \"estimatedHours\": 120,\n  \"totalHoursTaken\": 10,\n  \"startDate\": \"2025-01-01T00:00:00.000Z\",\n  \"endDate\": \"2025-02-01T00:00:00.000Z\",\n  \"isAssigned\": true,\n  \"assignees\": [],\n  \"leadership\": [\n    \"{{employeeLeadId}}\"\n  ],\n  \"leadAssignee\": \"{{employeeLeadId}}\",\n  \"VAInCharge\": \"{{employeeVAId}}\",\n  \"freelancers\": [\n    \"{{employeeFreelancerId}}\"\n  ],\n  \"updateIncharge\": \"{{employeeUpdateInchargeId}}\",\n  \"githubLinks\": [\n    \"https://github.com/org/repo\"\n  ],\n  \"loomLinks\": [\n    \"https://www.loom.com/share/demo\"\n  ],\n  \"fileLinks\": [\n    \"https://drive.google.com/somefile\"\n  ],\n  \"clientWhatsappGroupLink\": \"https://chat.whatsapp.com/client-group\",\n  \"teamWhatsappGroupLink\": \"https://chat.whatsapp.com/team-group\",\n  \"slackGroupLink\": \"https://slack.com/app_redirect?channel=project-x\",\n  \"clientUpsetOrDidntReply3Days\": false,\n  \"clientHandling\": \"Handled via weekly calls\",\n  \"remarks\": \"Important client\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Project by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/projects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/projects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "projects",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Website Redesign (Phase 2)\",\n  \"status\": \"on_hold\",\n  \"priority\": \"medium\",\n  \"remarks\": \"Waiting for client feedback\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/projects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Project Assignments",
+      "item": [
+        {
+          "name": "Create Project Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-assignments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"{{someProjectObjectId}}\",\n  \"employeeId\": \"{{someEmployeeObjectId}}\",\n  \"role\": \"coder\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Project Assignments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-assignments"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Project Assignment by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-assignments",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Project Assignment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-assignments",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"lead\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Project Assignment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-assignments",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Project Milestones",
+      "item": [
+        {
+          "name": "Create Project Milestone",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-milestones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-milestones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"{{someProjectObjectId}}\",\n  \"title\": \"Design Approved\",\n  \"dueDate\": \"2025-01-15T00:00:00.000Z\",\n  \"status\": \"not_started\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Project Milestones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-milestones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-milestones"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Project Milestone by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-milestones/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-milestones",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Project Milestone",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-milestones/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-milestones",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_progress\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Project Milestone",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/project-milestones/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "project-milestones",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trainings",
+      "item": [
+        {
+          "name": "Create Training",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/trainings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trainings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"React Advanced Workshop\",\n  \"description\": \"Deep dive into React patterns.\",\n  \"type\": \"technical\",\n  \"domain\": \"frontend\",\n  \"tags\": [\n    \"react\",\n    \"frontend\"\n  ],\n  \"startDate\": \"2025-01-05T00:00:00.000Z\",\n  \"endDate\": \"2025-01-10T00:00:00.000Z\",\n  \"status\": \"ongoing\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Trainings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/trainings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trainings"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Training by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/trainings/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trainings",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Training",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/trainings/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trainings",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"remarks\": \"Well received by team\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Training",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/trainings/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "trainings",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training Milestones",
+      "item": [
+        {
+          "name": "Create Training Milestone",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-milestones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-milestones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trainingId\": \"{{someTrainingObjectId}}\",\n  \"title\": \"Module 1 Completion\",\n  \"description\": \"Basic concepts covered\",\n  \"dueDate\": \"2025-01-06T00:00:00.000Z\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Training Milestones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-milestones",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-milestones"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Training Milestone by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-milestones/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-milestones",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Training Milestone",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-milestones/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-milestones",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Module 1 & 2 Completion\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Training Milestone",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-milestones/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-milestones",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training Tasks",
+      "item": [
+        {
+          "name": "Create Training Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-tasks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-tasks"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trainingId\": \"{{someTrainingObjectIdAsString}}\",\n  \"title\": \"Complete React Hooks exercise\",\n  \"description\": \"Implement custom hooks in project.\",\n  \"defaultTask\": true,\n  \"startDate\": \"2025-01-05T00:00:00.000Z\",\n  \"endDate\": \"2025-01-07T00:00:00.000Z\",\n  \"attachments\": [],\n  \"weight\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "List Training Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-tasks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-tasks"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Training Task by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-tasks/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-tasks",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Training Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-tasks/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-tasks",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"weight\": 4,\n  \"endDate\": \"2025-01-08T00:00:00.000Z\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Training Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-tasks/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-tasks",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training Task Assignments",
+      "item": [
+        {
+          "name": "Create Training Task Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-assignments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trainingTaskId\": \"{{trainingTaskIdString}}\",\n  \"trainingId\": \"{{trainingIdString}}\",\n  \"employeeId\": \"{{employeeIdString}}\",\n  \"type\": \"default\",\n  \"assignedAt\": \"2025-01-05T09:00:00.000Z\",\n  \"startDate\": \"2025-01-05T09:00:00.000Z\",\n  \"endDate\": \"2025-01-08T09:00:00.000Z\",\n  \"score\": 8\n}"
+            }
+          }
+        },
+        {
+          "name": "List Training Task Assignments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-assignments"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Training Task Assignment by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-assignments",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Training Task Assignment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-assignments",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"personal\",\n  \"score\": 9\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Training Task Assignment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-assignments",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training Task Updates",
+      "item": [
+        {
+          "name": "Create Training Task Update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-updates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-updates"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trainingTaskAssignmentId\": \"{{trainingTaskAssignmentIdString}}\",\n  \"trainingId\": \"{{trainingIdString}}\",\n  \"trainingTaskId\": \"{{trainingTaskIdString}}\",\n  \"employeeId\": \"{{employeeIdString}}\",\n  \"date\": \"2025-01-06T10:00:00.000Z\",\n  \"status\": \"in_progress\",\n  \"isApproved\": false,\n  \"approvedBy\": \"{{userIdString}}\",\n  \"notes\": \"Working on exercises.\",\n  \"attachments\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "List Training Task Updates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-updates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-updates"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Training Task Update by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-updates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-updates",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Training Task Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-updates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-updates",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"isApproved\": true,\n  \"notes\": \"Finished task successfully.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Training Task Update",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-task-updates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-task-updates",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training Assignments",
+      "item": [
+        {
+          "name": "Create Training Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-assignments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trainingId\": \"{{someTrainingObjectId}}\",\n  \"employeeId\": \"{{someEmployeeObjectId}}\",\n  \"status\": \"active\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Training Assignments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-assignments"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Training Assignment by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-assignments",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Training Assignment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-assignments",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Training Assignment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/training-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "training-assignments",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee Tasks",
+      "item": [
+        {
+          "name": "Create Employee Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-tasks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-tasks"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Daily standup report\",\n  \"description\": \"Send daily status update.\",\n  \"defaultTask\": true,\n  \"startDate\": \"2025-01-01T09:00:00.000Z\",\n  \"endDate\": \"2025-01-01T09:15:00.000Z\",\n  \"attachments\": [],\n  \"weight\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "List Employee Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-tasks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-tasks"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Employee Task by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-tasks/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-tasks",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-tasks/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-tasks",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Send detailed daily status update.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Employee Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-tasks/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-tasks",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee Task Assignments",
+      "item": [
+        {
+          "name": "Create Employee Task Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-assignments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeTaskId\": \"{{employeeTaskIdString}}\",\n  \"employeeId\": \"{{employeeIdString}}\",\n  \"type\": \"default\",\n  \"assignedAt\": \"2025-01-02T09:00:00.000Z\",\n  \"startDate\": \"2025-01-02T09:00:00.000Z\",\n  \"endDate\": \"2025-01-02T18:00:00.000Z\",\n  \"score\": 10\n}"
+            }
+          }
+        },
+        {
+          "name": "List Employee Task Assignments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-assignments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-assignments"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Employee Task Assignment by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-assignments",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee Task Assignment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-assignments",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"personal\",\n  \"score\": 8\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Employee Task Assignment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-assignments/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-assignments",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee Task Updates",
+      "item": [
+        {
+          "name": "Create Employee Task Update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-updates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-updates"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeTaskAssignmentId\": \"{{employeeTaskAssignmentIdString}}\",\n  \"employeeId\": \"{{employeeIdString}}\",\n  \"employeeTaskId\": \"{{employeeTaskIdString}}\",\n  \"date\": \"2025-01-02T12:00:00.000Z\",\n  \"status\": \"in_progress\",\n  \"isApproved\": false,\n  \"approvedBy\": \"{{managerUserIdString}}\",\n  \"notes\": \"Started working on task.\",\n  \"attachments\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "List Employee Task Updates",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-updates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-updates"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Employee Task Update by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-updates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-updates",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee Task Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-updates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-updates",
+                ":id"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"isApproved\": true,\n  \"notes\": \"Task done.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Employee Task Update",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/employee-task-updates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employee-task-updates",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

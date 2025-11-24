@@ -4,7 +4,6 @@ import { objectIdSchema, paginationQuerySchema } from "./common.schema";
 
 export const createEmployeeTaskAssignmentSchema = z.object({
   body: z.object({
-    id: z.string().min(1), // this field is required in model
     employeeTaskId: z.string().min(1),
     employeeId: z.string().min(1),
     type: z.enum(["default", "personal"]).optional(),

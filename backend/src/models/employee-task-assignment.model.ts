@@ -1,9 +1,6 @@
 import { model, Schema } from "mongoose";
 
 const EmployeeTaskAssignmentSchema = new Schema({
-  id: { 
-    type: String, required: true, unique: true 
-  },
   employeeTaskId: { 
     type: String, ref: 'EmployeeTask', required: true
   },

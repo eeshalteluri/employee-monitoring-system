@@ -203,7 +203,6 @@ export default async function seedLogic() {
       range(randomInt(1, 3)).map((i) => {
         const emp = rand(employees);
         return {
-          id: `ETASSIGN-${idx}-${i}-${Date.now()}`,
           employeeTaskId: String(task._id),
           employeeId: String(emp._id),
           type: rand(["default", "personal"]),
@@ -220,7 +219,6 @@ export default async function seedLogic() {
   await EmployeeTaskUpdate.insertMany(
     employeeTaskAssignments.flatMap((assign, idx) =>
       range(randomInt(1, 3)).map((i) => ({
-        id: `ETUPDATE-${idx}-${i}-${Date.now()}`,
         employeeTaskAssignmentId: assign.id,
         employeeId: assign.employeeId,
         employeeTaskId: assign.employeeTaskId,
@@ -238,7 +236,6 @@ export default async function seedLogic() {
       range(randomInt(1, 3))
         .map(() => rand(trainingAssignments))
         .map((assign, i) => ({
-          id: `TTASSIGN-${idx}-${i}-${Date.now()}`,
           trainingTaskId: String(task._id),
           trainingId: String(assign.trainingId),
           employeeId: String(assign.employeeId),
@@ -255,7 +252,6 @@ export default async function seedLogic() {
   await TrainingTaskUpdate.insertMany(
     trainingTaskAssignments.flatMap((assign, idx) =>
       range(randomInt(1, 3)).map((i) => ({
-        id: `TTUPDATE-${idx}-${i}-${Date.now()}`,
         trainingTaskAssignmentId: assign.id,
         trainingId: assign.trainingId,
         trainingTaskId: assign.trainingTaskId,

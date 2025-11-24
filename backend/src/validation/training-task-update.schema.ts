@@ -4,7 +4,6 @@ import { paginationQuerySchema } from "./common.schema";
 
 export const createTrainingTaskUpdateSchema = z.object({
   body: z.object({
-    id: z.string().min(1),
     trainingTaskAssignmentId: z.string().min(1),
     trainingId: z.string().min(1),
     trainingTaskId: z.string().min(1),
